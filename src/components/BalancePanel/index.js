@@ -4,10 +4,10 @@ import { View, Text, StyleSheet, Button } from 'react-native'
 import BalancePanelLabel from '../BalancePanel/BalancePanelLabel'
 import BalancePanelChart from '../BalancePanel/BalancePanelChart'
 
-const BalancePanel = () => {
+const BalancePanel = ({currentBalance}) => {
     return (
         <View style={styles.container}>
-            <BalancePanelLabel />
+            <BalancePanelLabel currentBalance={currentBalance} />
             <BalancePanelChart />
             
         </View>
