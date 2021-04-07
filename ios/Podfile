@@ -12,6 +12,8 @@ target 'smartking' do
     :hermes_enabled => false
   )
 
+  pod 'RealmJS', :path => '../node_modules/realm'
+
   target 'smartkingTests' do
     inherit! :complete
     # Pods for testing
