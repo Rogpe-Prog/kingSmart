@@ -2117,6 +2117,10 @@ data-urls@^2.0.0:
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
 
+date-and-time@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/date-and-time/-/date-and-time-0.9.0.tgz#1524579e56dc07675c640b41735a7665c0659240"
+
 dayjs@^1.8.15:
   version "1.10.4"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.10.4.tgz"
@@ -5191,6 +5195,13 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.npmjs.org/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz"
 
+react-native-masked-text@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-masked-text/-/react-native-masked-text-1.13.0.tgz#533fde8c45ccbaa1d6b0df30bf19b84b4ace3de3"
+  dependencies:
+    date-and-time "0.9.0"
+    tinymask "1.0.2"
+
 react-native-reanimated@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.1.0.tgz"
@@ -6210,6 +6221,10 @@ through2@^2.0.1:
   dependencies:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
+
+tinymask@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/tinymask/-/tinymask-1.0.2.tgz#df3775a94087b0d3d056c256e8923c01b7ec0941"
 
 tmpl@1.0.x:
   version "1.0.4"
