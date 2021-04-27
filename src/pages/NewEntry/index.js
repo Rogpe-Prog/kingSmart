@@ -4,6 +4,8 @@ import { View, StyleSheet, TextInput, Button } from 'react-native'
 import BalanceLabel from '../../components/BalanceLabel'
 import NewEntryInput from './NewEntryInput'
 import NewEntryCategoryPicker from './NewEntryCategoryPicker'
+import NewEntryDatePicker from './NewEntryDatePicker'
+import NewEntryDeleteAction from './NewEntryDeleteAction'
 
 import Colors from '../../styles/Colors'
 
@@ -22,6 +24,7 @@ const NewEntry = ({ navigation }) => {
     const [debit, setDebit] = useState(entry.amount <= 0)
     const [amount, setAmount] = useState(entry.amount)
     const [category, setCategory] = useState(entry.category)
+    const [entryAt, setEntryAt] = useState(entry.entryAt)
 
     const isValid = () => {
         if(parseFloat(amount) !== 0){
@@ -34,7 +37,8 @@ const NewEntry = ({ navigation }) => {
     const onSave = () => {
         const data = {
             amount: parseFloat(amount),
-            category: category
+            category: category,
+            entryAt: entryAt,
         }
         console.log('NewEntry :: onSave ', data)
         saveEntry(data, entry)
@@ -54,20 +58,24 @@ const NewEntry = ({ navigation }) => {
         <View style={ styles.container}>
             <BalanceLabel />
 
-            <View>
+            <View style={styles.formContainer}>
                 <NewEntryInput 
                     value={amount} 
                     onChangeValue={setAmount} 
                     onChangeDebit={setDebit}
                 />
+
                 <NewEntryCategoryPicker 
                     debit={debit} 
                     category={category} 
                     onChageCategory={setCategory} 
                 />
+
+                <View style={styles.formActionContainer}>
+                    <NewEntryDatePicker value={entryAt} onChange={setEntryAt} />
+                    <NewEntryDeleteAction entry={entry} onOkPress={onDelete} />
+                </View>
                 
-                <Button title='GPS' />
-                <Button title='Camera' />
             </View>
             <View>
                 <Button title='Adicionar' 
@@ -75,7 +83,7 @@ const NewEntry = ({ navigation }) => {
                         isValid() && onSave()
                     }} 
                 />
-                <Button title='Excluir' onPress={onDelete} />
+
                 <Button title='Cancelar' onPress={onClose} />
             </View>
         </View>
@@ -88,10 +96,15 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.background,
         padding: 10,
     },
-    input: {
-        borderColor: '#000',
-        borderWidth: 1,
-    }
+    formContainer: {
+        flex: 1,
+        paddingVertical: 20,
+    },
+    formActionContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginVertical: 10,
+    },
 })  
 
 export default NewEntry
