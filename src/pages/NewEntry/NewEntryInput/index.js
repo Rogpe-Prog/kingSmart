@@ -5,8 +5,8 @@ import Colors from '../../../styles/Colors'
 
 import { TextInputMask } from 'react-native-masked-text'
 
-const NewEntryInput = ({value, onChangeValue}) => {
-    const [debit, setDebit] = useState(value < 0 ? -1 : 1)
+const NewEntryInput = ({value, onChangeDebit, onChangeValue}) => {
+    const [debit, setDebit] = useState(value <= 0 ? -1 : 1)
     const [debitPrefix, setDebitPrefix] = useState(value < 0 ? '-' : '')
 
 
@@ -14,9 +14,11 @@ const NewEntryInput = ({value, onChangeValue}) => {
         if(debit < 0) {
             setDebit(1)
             setDebitPrefix('')
+            onChangeDebit(false)
         } else {
             setDebit(-1)
             setDebitPrefix('-')
+            onChangeDebit(true)
         }
 
         onChangeValue(value * -1)

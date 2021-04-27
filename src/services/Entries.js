@@ -24,6 +24,7 @@ export const saveEntry = async (value, entry = {}) => {
                 amount: value.amount || entry.amount,
                 entryAt: value.entryAt || entry.entryAt || new Date(),
                 isInit: false,
+                category: value.category || entry.category,
             }
             realm.create('Entry', data, true)
         })

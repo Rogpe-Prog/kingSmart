@@ -11,8 +11,8 @@ const EntryListItem = ({entry, isFirstItem, isLastItem, onEntryPress}) => {
     const bulletLineY = isFirstItem ? 25 : 0
     const bulletLineHeight = isFirstItem ? 25 : 25 // 25 : 50
     const showBulletLine = !(isFirstItem && isLastItem)
-    const bulletColor = entry.category || Colors.white
-   // console.log('entry :: ', JSON.stringify(entry.category))
+    const bulletColor = entry.category.color || Colors.white
+   console.log('entryY :: ', JSON.stringify(entry.category))
 
     return (
         <TouchableOpacity onPress={() => onEntryPress && onEntryPress(entry)}>
