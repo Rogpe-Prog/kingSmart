@@ -5,26 +5,15 @@ import Container from '../../components/Core/Container'
 
 import EntryListItem from '../EntryList/EntryListItem'
 
-import {getEntries} from '../../services/Entries'
+import useEntries from '../../hooks/useEntries'
 
-const EntryList = ({onEntryPress, onPressActionButton}) => {
-    const [entries, setEntries] = useState([])
-
-    useEffect(() => {
-        async function loadEntries() {
-            const data = await getEntries()
-            setEntries(data)
-        }
-
-        loadEntries()
-
-        console.log('EntryList :: useEffect ')
-    }, [])
+const EntryList = ({days = 7, category, onEntryPress, onPressActionButton}) => {
+    const [entries] = useEntries(days, category)
     
     return (
         <Container 
             title="Últimos lançamentos"
-            actionLabelText="Últimos 7 dias"
+            actionLabelText={`Últimos ${days} dias `}
             actionButtonText="Ver mais"
             onPressActionButton={onPressActionButton}
         >

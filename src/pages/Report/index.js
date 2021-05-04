@@ -1,53 +1,118 @@
-import React from 'react'
-import { View, StyleSheet, Button } from 'react-native'
-import {Picker} from '@react-native-picker/picker'
+import React, {useState} from 'react'
+import { View, TouchableOpacity, ScrollView, StyleSheet, LogBox, Text } from 'react-native'
+
+import Colors from '../../styles/Colors'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+
+import ActionFooter, {ActionPrimaryButton} from '../../components/Core/ActionFooter'
 
 import BalanceLabel from '../../components/BalanceLabel'
 import EntrySummary from '../../components/EntrySummary'
 import EntryList from '../../components/EntryList'
+import RelativeDaysModal from '../../components/RelativeDaysModal'
+import CategoryModal from '../../components/CategoryModal'
 
-const Report = () => {
-    const currentBalance = 2065.34
+const Report = ({navigation}) => {
+    LogBox.ignoreAllLogs() //BSON Yellow and VirtualizedList Red
+    
+    const [relativeDaysModalVisible, setRelativeDaysModalVisible] = useState(false)
+    const [categoryModalVisible, setCategoryModalVisible] = useState(false)
+    const [relativeDays, setRelativeDays] = useState(7)
+    const [category, setcategory] = useState({id: null, name: 'Todas Categorias'})
 
-    const entriesGrouped = [
-        {key: '1', description: 'Alimentação', amount: 200 },
-        {key: '2', description: 'Combustível',  amount: 12 },
-        {key: '3', description: 'Aluguel', amount: 120 },
-        {key: '4', description: 'Lazer', amount: 250 },
-        {key: '5', description: 'Outros', amount: 1200 }
-        ]
+    const onRelativeDaysPress = item => {
+        setRelativeDays(item)
+        onRelativeDaysClosePress()
+    }
 
-    const entries = [
-        {key: '1', description: 'Padaria Asa Branca EntryList', amount: 10},
-        {key: '2', description: 'Supermercado Isadora EntryList', amount: 190},
-        {key: '3', description: 'Posto Ipiranga EntryList', amount: 290}
-        ]
+    const onCategoryPress = item => {
+        setcategory(item)
+        onCategoryClosePress()
+    }
+    
+    const onRelativeDaysClosePress = () => {
+        setRelativeDaysModalVisible(false)
+
+    }
+
+    const onCategoryClosePress = () => {
+        setCategoryModalVisible(false)
+    }
+
 
 
     return (
         <View style={styles.container}>
-            <BalanceLabel currentBalance={currentBalance} />
-            <View>
-                <Picker>
-                    <Picker.Item label="Todas Categorias" />
-                </Picker>
-                <Picker>
-                    <Picker.Item label="Últimos 7 dias" />
-                </Picker>
+            <BalanceLabel />
+            <View style={styles.filtersContainer}>
+                <TouchableOpacity 
+                    style={styles.filterButton}
+                    onPress={() => {setRelativeDaysModalVisible(true)}}
+                >
+                    <Text style={styles.filterButtonText}>Últimos {relativeDays} dias</Text>
+                    <Icon name="keyboard-arrow-down" size={30} color={Colors.champagneDark} />
+                </TouchableOpacity>
+                <RelativeDaysModal 
+                    isVisible={relativeDaysModalVisible}  
+                    onConfirm={onRelativeDaysPress}
+                    onCancel={onRelativeDaysClosePress}
+                />
+
+                <TouchableOpacity 
+                    style={styles.filterButton}
+                    onPress={() => setCategoryModalVisible(true)}
+                >
+                    <Text style={styles.filterButtonText}>{category.name}</Text>
+                    <Icon name="keyboard-arrow-down" size={30} color={Colors.champagneDark} />
+                </TouchableOpacity>
+
+                <CategoryModal 
+                    categoryType="all" 
+                    isVisible={categoryModalVisible}
+                    onConfirm={onCategoryPress}
+                    onCancel={onCategoryClosePress}
+                />
+
+
             </View>
-            <EntrySummary entriesGrouped={entriesGrouped} />
-           <EntryList entries={entries} />
-            <View>
-                <Button title="Salvar" />
-                <Button title="Fechar" />
-            </View>
+           
+           <ScrollView>
+                <EntrySummary />
+                <EntryList days={relativeDays} category={category} />
+           </ScrollView>
+           
+            <ActionFooter>
+                <ActionPrimaryButton
+                    tittle="Fechar"
+                    onPress={() => navigation.goBack()} />
+            </ActionFooter>
+        
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
+        flex: 1,
+        backgroundColor: Colors.background,
+    },
+    filterButton: {
+        flexDirection: 'row',
+        borderColor: Colors.champagneDark,
+        borderWidth: 1,
+        borderRadius: 150,
+        paddingVertical: 3,
+        paddingHorizontal: 10,
+        marginHorizontal: 10,
+        alignItems: 'center',
+    },  
+    filterButtonText: {
+        color: Colors.champagneDark,
+
+    },  
+    filtersContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
 })
 

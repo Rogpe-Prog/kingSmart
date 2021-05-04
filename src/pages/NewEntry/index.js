@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, TextInput, Button } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+
+import ActionFooter, {ActionPrimaryButton, ActionSecondaryButton} from '../../components/Core/ActionFooter'
 
 import BalanceLabel from '../../components/BalanceLabel'
 import NewEntryInput from './NewEntryInput'
@@ -9,8 +11,7 @@ import NewEntryDeleteAction from './NewEntryDeleteAction'
 
 import Colors from '../../styles/Colors'
 
-import { saveEntry } from '../../services/Entries'
-import { deleteEntry } from '../../services/Entries'
+import useEntries from '../../hooks/useEntries'
 
 const NewEntry = ({ navigation }) => {
 
@@ -20,6 +21,8 @@ const NewEntry = ({ navigation }) => {
         entryAt: new Date(),
         category: {id: null, name: 'Selecione'},
     })
+
+    const [, saveEntry, deleteEntry] = useEntries()
     
     const [debit, setDebit] = useState(entry.amount <= 0)
     const [amount, setAmount] = useState(entry.amount)
@@ -77,15 +80,15 @@ const NewEntry = ({ navigation }) => {
                 </View>
                 
             </View>
-            <View>
-                <Button title='Adicionar' 
-                    onPress={() => {
-                        isValid() && onSave()
-                    }} 
-                />
-
-                <Button title='Cancelar' onPress={onClose} />
-            </View>
+           
+            <ActionFooter>
+                    <ActionPrimaryButton 
+                        tittle={entry.id ? 'Salvar' : 'Adicionar'} 
+                        onPress={() => {
+                            isValid() && onSave()
+                        }}  />
+                    <ActionSecondaryButton tittle="Cancelar" onPress={onClose} />
+            </ActionFooter>
         </View>
     )
 }

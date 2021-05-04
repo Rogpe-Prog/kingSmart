@@ -1,4 +1,5 @@
 import React from 'react'
+import {View, StyleSheet} from 'react-native'
 
 import EntrySummaryChart from '../EntrySummary/EntrySummaryChart'
 import EntrySummaryList from '../EntrySummary/EntrySummaryList'
@@ -13,18 +14,27 @@ const entriesGrouped = [
     {key: '5', description: 'Outros', amount: 1200 }
     ]
 
-const EntrySummary = ({onPressActionButton}) => {
+const EntrySummary = ({days = 7, onPressActionButton}) => {
     return (
         <Container 
             title="Categorias" 
-            actionLabelText="Útlimos 7 dias" 
+            actionLabelText={`Últimos ${days} dias`} 
             actionButtonText="Ver mais"
             onPressActionButton={onPressActionButton}
         >
+        <View style={styles.inner}>
             <EntrySummaryChart />
             <EntrySummaryList entriesGrouped={entriesGrouped} />
+        </View>
         </Container>
     )
 }
+
+const styles = StyleSheet.create({
+    inner: {
+        flexDirection: 'row',
+        paddingVertical: 10
+    }
+})
 
 export default EntrySummary
