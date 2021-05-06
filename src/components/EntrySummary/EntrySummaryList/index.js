@@ -1,21 +1,23 @@
-import React from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import React from 'react';
+import {View, FlatList, StyleSheet} from 'react-native';
 
-const EntrySummaryList = ({entriesGrouped}) => {
-    return (
-        <View style={styles.container}>
-            <FlatList
-                data={entriesGrouped}
-                renderItem={({item}) => <Text> - {item.description} - ${item.amount}</Text>}
-            ></FlatList>
-        </View>
-    )
-}
+import EntrySummaryListItem from './EntrySummaryListItem';
+
+const EntrySummaryList = ({data}) => {
+  return (
+    <FlatList
+      style={styles.container}
+      data={data}
+      keyExtractor={item => item.category.id}
+      renderItem={({item}) => <EntrySummaryListItem entry={item} />}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-    },
-})
+  container: {
+    flex: 1,
+  },
+});
 
-export default EntrySummaryList
+export default EntrySummaryList;
