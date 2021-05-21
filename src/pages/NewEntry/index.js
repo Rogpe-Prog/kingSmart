@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, StatusBar } from 'react-native'
 
 import ActionFooter, {ActionPrimaryButton, ActionSecondaryButton} from '../../components/Core/ActionFooter'
 
@@ -77,6 +77,7 @@ const NewEntry = ({ navigation }) => {
             <BalanceLabel />
 
             <View style={styles.formContainer}>
+            <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
                 <NewEntryInput 
                     value={amount} 
                     onChangeValue={setAmount} 

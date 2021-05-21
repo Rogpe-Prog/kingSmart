@@ -9,7 +9,7 @@ import Colors from '../../styles/Colors'
 
 const Main = ({ navigation }) => {
 
-    LogBox.ignoreAllLogs()
+    //LogBox.ignoreAllLogs()
 
     return (
         <View style={styles.container}>

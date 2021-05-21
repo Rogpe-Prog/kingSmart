@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { View, StyleSheet, TouchableOpacity, StatusBar } from 'react-native'
 
 import LinearGradient from 'react-native-linear-gradient'
 
@@ -17,6 +17,7 @@ const BalancePanel = ({onNewEntryPress}) => {
 
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="light-content" backgroundColor={Colors.violet} />
             <LinearGradient 
                 colors={[Colors.violet, Colors.blue]}
                 style={styles.panel}

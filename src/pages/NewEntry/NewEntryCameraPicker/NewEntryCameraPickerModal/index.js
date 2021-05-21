@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Modal, StyleSheet, Alert } from 'react-native'
+import { View, Modal, StyleSheet, Alert, ImageBackground } from 'react-native'
 
 import { RNCamera } from 'react-native-camera'
 
@@ -23,7 +23,7 @@ const NewEntryCameraPickerModal = ({ photo, isVisible, onChangePhoto, onDelete, 
         } catch(error){
             console.log('NewEntryCameraPickerModal :: onTakePicture ' + error)
         }
-        Alert.alert('Erro', 'Houve um erro ao tirar a foto.')
+        //Alert.alert('Erro', 'Houve um erro ao tirar a foto.')
     }
 
 
@@ -44,6 +44,30 @@ const NewEntryCameraPickerModal = ({ photo, isVisible, onChangePhoto, onDelete, 
                 transparent={false}
                 visible={isVisible}
             >
+                {photo ? (
+                   <ImageBackground style={styles.imagePreview} source={{uri: photo}} >
+                        <View style={styles.pictureButtonActions}>
+                            <Icon
+                                name="delete"
+                                size={50}
+                                color={Colors.white}
+                                onPress={onDelete}
+                                style={styles.buttonClose}
+                            />
+                            
+                            <Icon
+                                name="check"
+                                size={50}
+                                color={Colors.white}
+                                onPress={onClose}
+                                style={styles.buttonCheck}
+                            />
+
+                        </View>
+                   </ImageBackground>
+
+                ) : (
+
                 <RNCamera
                     ref={ref => setCamera(ref)}
                     style={styles.camera}
@@ -80,8 +104,9 @@ const NewEntryCameraPickerModal = ({ photo, isVisible, onChangePhoto, onDelete, 
                         style={styles.buttonDeletePicture}
 
                     />
-
                 </RNCamera>
+
+                )}
 
             </Modal>
         </View>
@@ -89,6 +114,24 @@ const NewEntryCameraPickerModal = ({ photo, isVisible, onChangePhoto, onDelete, 
 }
 
 const styles = StyleSheet.create({
+    imagePreview: {
+        width: '100%',
+        height: '100%'
+    },
+    pictureButtonActions: {
+        flex: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        position: 'absolute',
+        bottom: 16,
+    },  
+    buttonClose: {
+        marginLeft: 16,
+    },
+    buttonCheck: {
+        marginLeft: 16,
+    },
     camera: {
         flex: 1,
     },
